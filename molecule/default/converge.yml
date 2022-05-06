@@ -1,0 +1,10 @@
+
+- name: Converge
+  hosts: all
+  collections:
+    - widhalmt.backup
+  tasks:
+
+    - name: "Include Rsnapshot"
+      include_role:
+        name: rsnapshot
