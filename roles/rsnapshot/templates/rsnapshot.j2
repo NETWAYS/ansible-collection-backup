@@ -1,0 +1,21 @@
+# {{ ansible_managed }}
+config_version  1.2
+snapshot_root   {{ rsnapshot_snapshotr_root }}
+no_create_root  1
+cmd_cp      /bin/cp
+cmd_rm      /bin/rm
+cmd_rsync   /usr/bin/rsync
+cmd_ssh /usr/bin/ssh
+cmd_logger  /usr/bin/logger
+retain  hourly  24
+retain  daily   7
+retain  weekly  4
+retain  monthly 12
+retain  yearly  10
+verbose     2
+loglevel    3
+lockfile    /var/run/rsnapshot.pid
+rsync_long_args --delete --numeric-ids --relative --delete-excluded --rsync-path=/usr/local/rsync-wrapper.sh
+ssh_args    -p 22 -i /root/.ssh/id_rsa
+exclude     *.sql
+backup  /home/      host1/

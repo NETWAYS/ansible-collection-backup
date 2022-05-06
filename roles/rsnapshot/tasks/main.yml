@@ -1,0 +1,16 @@
+---
+
+- name: Install rsnapshot
+  package:
+    name: rsnapshot
+
+# Users can have read access to the directory
+# because rsnapshot copies permissions
+
+- name: Make sure snapshot dir exists
+  file:
+    state: directory
+    path: "{{ rsnapshot_snapshot_root }}"
+    owner: root
+    group: root
+    mode: 0755
