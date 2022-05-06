@@ -1,3 +1,4 @@
 ---
 
 rsnapshot_snapshot_root: /opt/backup/rsnapshot/
+rsnapshot_remote_snapshots: false
