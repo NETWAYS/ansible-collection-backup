@@ -28,7 +28,8 @@ jobs:
           yamllint .
           yamllint roles/*
           ansible-lint roles/*
-  build-ansible29:
+
+  molecule_tests:
     runs-on: ubuntu-latest
 
     env:
