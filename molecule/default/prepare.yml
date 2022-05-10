@@ -20,3 +20,9 @@
           - procps
           - curl
       when: ansible_os_family == "Debian"
+
+    - name: Install packages for RedHat
+      package:
+        name:
+          - cronie
+      when: ansible_os_family == "RedHat"
