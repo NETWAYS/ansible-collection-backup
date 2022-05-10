@@ -9,3 +9,7 @@
         /usr/bin/rsnapshot
         -c /etc/rsnapshot.conf
         hourly
+
+    - name: Check for backup
+      stat:
+        path: /opt/backup/rsnapshot/hourly.0/localhost/root/rsnapshot/timestamp.hourly
