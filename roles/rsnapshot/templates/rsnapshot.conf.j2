@@ -17,5 +17,9 @@ lockfile	/var/run/rsnapshot.pid
 rsync_long_args --delete --numeric-ids --relative --delete-excluded --rsync-path=/usr/local/rsync-wrapper.sh
 ssh_args	-p 22 -i /root/.ssh/id_rsa
 {% endif %}
-exclude		*.sql
-backup	/root/	localhost/
+{% for exclude in rsnapshot_excludes %}
+exclude		{{ exclude }}
+{% endfor %}
+{% for backup in rsnapshot_backups %}
+backup	{{ backup }}	{{ ansible_hostname }}/
+{% endfor %}

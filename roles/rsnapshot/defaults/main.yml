@@ -1,8 +1,11 @@
 ---
 
 rsnapshot_snapshot_root: /opt/backup/rsnapshot/
+
 rsnapshot_timestamp_dir: /root/rsnapshot/
+
 rsnapshot_remote_snapshots: false
+
 rsnapshot_retains:
   - name: hourly
     count: 24
@@ -20,3 +23,11 @@ rsnapshot_retains:
   - name: yearly
     count: 10
     interval: yearly
+
+rsnapshot_backups:
+  - /root
+  - /etc
+  - /home
+
+rsnapshot_excludes:
+  - "*.sql"
