@@ -3,7 +3,7 @@
 - name: Converge
   hosts: all
   collections:
-    - widhalmt.backup
+    - netways.backup
   tasks:
 
     - name: "Include Rsnapshot"
