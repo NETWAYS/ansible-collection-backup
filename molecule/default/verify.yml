@@ -1,0 +1,15 @@
+---
+
+- hosts: all
+  tasks:
+    - name: Run default rsnapshot
+      shell: >
+        /bin/date >
+        /root/rsnapshot//timestamp.hourly;
+        /usr/bin/rsnapshot
+        -c /etc/rsnapshot.conf
+        hourly
+
+    - name: Check for backup
+      stat:
+        path: /opt/backup/rsnapshot/hourly.0/backup-defaul/root/rsnapshot/timestamp.hourly
