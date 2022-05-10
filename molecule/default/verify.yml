@@ -3,7 +3,7 @@
 - hosts: all
   tasks:
     - name: Run default rsnapshot
-      command: >
+      shell: >
         /bin/date >
         /root/rsnapshot//timestamp.hourly;
         /usr/bin/rsnapshot
