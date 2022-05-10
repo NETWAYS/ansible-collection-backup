@@ -14,3 +14,52 @@
     owner: root
     group: root
     mode: 0755
+
+- name: Create timestamp directory when at least one job needs it
+  file:
+    path: "{{ rsnapshot_timestamp_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+  with_items: "{{ rsnapshot_retains }}"
+  when:
+    - item.timestamp is defined
+    - item.timestamp | bool
+
+- name: Place rsnapshot configuration
+  template:
+    dest: /etc/rsnapshot.conf
+    src: rsnapshot.conf.j2
+    owner: root
+    group: root
+    mode: 0644
+    backup: true
+
+- name: Plan cronjobs with timestamp
+  cron:
+    name: "rsnapshot run {{ item.name }}"
+    special_time: "{{ item.interval }}"
+    job: >
+      /bin/date >
+      {{ rsnapshot_timestamp_dir }}/timestamp.{{ item.name }};
+      /usr/bin/rsnapshot
+      -c /etc/rsnapshot.conf
+      {{ item.name }}
+  with_items: "{{ rsnapshot_retains }}"
+  when:
+    - item.timestamp is defined
+    - item.timestamp | bool
+
+- name: Plan cronjobs without timestamp
+  cron:
+    name: "rsnapshot run {{ item.name }}"
+    special_time: "{{ item.interval }}"
+    job: >
+      /usr/bin/rsnapshot
+      -c /etc/rsnapshot.conf
+      {{ item.name }}
+  with_items: "{{ rsnapshot_retains }}"
+  when:
+    - item.timestamp is undefined or
+      not item.timestamp | bool

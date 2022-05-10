@@ -1,0 +1,11 @@
+---
+
+- hosts: all
+  tasks:
+    - name: Run default rsnapshot
+      command: >
+        /bin/date >
+        /root/rsnapshot//timestamp.hourly;
+        /usr/bin/rsnapshot
+        -c /etc/rsnapshot.conf
+        hourly

@@ -7,11 +7,9 @@ cmd_rm      /bin/rm
 cmd_rsync   /usr/bin/rsync
 cmd_ssh /usr/bin/ssh
 cmd_logger  /usr/bin/logger
-retain  hourly  24
-retain  daily   7
-retain  weekly  4
-retain  monthly 12
-retain  yearly  10
+{% for retain in rsnapshot.retains %}
+retain  {{ retain.name }}  {{ retain.count }}
+{% endfor %}
 verbose     2
 loglevel    3
 lockfile    /var/run/rsnapshot.pid
