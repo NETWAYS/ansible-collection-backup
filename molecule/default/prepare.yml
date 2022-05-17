@@ -1,8 +1,21 @@
 ---
 - name: Prepare
   hosts: all
+  vars:
+    mysql_root_username: root
+    mysql_root_password: netways0815!
+    mysql_databases:
+      - name: testDatabase
+        encoding: utf8
+        collation: utf8_general_ci
+        replicate: 0
+    mysql_users: 
+      - name: testDatabase
+        host: 127.0.0.1
+        password: netways0815!
+        priv: requesttracker.*:ALL
+        
   tasks:
-
     - name: Refresh apt cache
       apt:
         update_cache: yes
@@ -26,3 +39,9 @@
         name:
           - cronie
       when: ansible_os_family == "RedHat"
+
+    - name: Install geerlinggy.mysql role
+      command: ansible-galaxy install geerlingguy.mysql
+    
+  roles:
+    - geerlingguy.mysql
