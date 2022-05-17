@@ -39,9 +39,6 @@
         name:
           - cronie
       when: ansible_os_family == "RedHat"
-
-    - name: Install geerlinggy.mysql role
-      command: ansible-galaxy install geerlingguy.mysql
     
   roles:
     - geerlingguy.mysql
