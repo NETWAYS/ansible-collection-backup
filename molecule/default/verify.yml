@@ -59,7 +59,7 @@
       community.mysql.mysql_db:
         name: testDatabase
         state: import
-        target: /opt/mysqlbackup/mysqldump_{{system_time}}.sql.bz2
+        target: /opt/mysqlbackup/mysqldump_{{system_time}}*
 
     - name: Simple select query to acme db
       community.mysql.mysql_query:
