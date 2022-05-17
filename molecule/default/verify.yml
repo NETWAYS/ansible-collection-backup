@@ -13,14 +13,15 @@
       stat:
         path: /opt/backup/rsnapshot/hourly.0/backup-defaul/root/rsnapshot/timestamp.hourly
 
+    - name: .my.cnf exists    
+      command: cat /root/.my.cnf
+
     - name: Create test table in database and insert test value
       community.mysql.mysql_query:
         query:
           - CREATE TABLE IF NOT EXISTS test (message varchar(255) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=utf8;
           - INSERT INTO test(message) VALUES('Ansible value');
         login_db: testDatabase
-        login_user: testUser
-        login_password: netways0815!
 
     - name: Create backup script
       template:
