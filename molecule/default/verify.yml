@@ -1,7 +1,7 @@
 ---
 - hosts: all
   vars:
-    system_time: "{{ lookup('pipe','date +%Y-%m-%d-%H-%M-%S') }}"
+    system_time: "{{ lookup('pipe','date +%Y-%m-%d') }}"
   tasks:
     - name: Run default rsnapshot
       shell: >
