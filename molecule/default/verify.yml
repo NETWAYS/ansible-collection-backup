@@ -32,7 +32,7 @@
         mode: "0600"
 
     - name: Create backup with backup script
-      shell: backup.sh
+      shell: ./backup.sh
       args:
         chdir: /root/
         executable: /bin/bash
