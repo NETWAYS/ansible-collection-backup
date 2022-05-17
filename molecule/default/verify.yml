@@ -25,8 +25,8 @@
 
     - name: Create backup script
       template:
-        src: backup.sh.j2
-        dest: /root
+        src: /home/runner/work/ansible-collection-backup/ansible-collection-backup/templates/backup.sh.j2
+        dest: /root/backup.sh
         owner: root
         group: root
         mode: "0600"
