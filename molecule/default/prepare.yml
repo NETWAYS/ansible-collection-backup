@@ -13,7 +13,7 @@
       - name: testDatabase
         host: 127.0.0.1
         password: netways0815!
-        priv: requesttracker.*:ALL
+        priv: testUser.*:ALL
         
   tasks:
     - name: Refresh apt cache
