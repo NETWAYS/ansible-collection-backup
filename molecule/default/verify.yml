@@ -29,10 +29,10 @@
         dest: /root/backup.sh
         owner: root
         group: root
-        mode: "0600"
+        mode: "0700"
 
     - name: Create backup with backup script
-      shell: ./backup.sh
+      shell: backup.sh
       args:
         chdir: /root/
         executable: /bin/bash
