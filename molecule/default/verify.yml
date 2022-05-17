@@ -1,5 +1,7 @@
 ---
 - hosts: all
+  vars:
+    system_time: "{{ lookup('pipe','date +%Y-%m-%d-%H-%M-%S') }}"
   tasks:
     - name: Run default rsnapshot
       shell: >
@@ -50,7 +52,7 @@
       community.mysql.mysql_db:
         name: testDatabase
         state: import
-        target: /opt/mysqlbackup/mysqldump_$(date +%Y%m%d).sql.bz2
+        target: /opt/mysqlbackup/mysqldump_{{system_time}}.sql.bz2
 
     - name: Simple select query to acme db
       community.mysql.mysql_query:
