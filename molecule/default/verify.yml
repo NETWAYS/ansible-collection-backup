@@ -48,6 +48,13 @@
         name: testDatabase
         state: present
 
+    - name: Debug
+      command: ls -l /opt/mysqlbackup/
+      register: output
+
+    - debug:
+        var: output
+
     - name: Restore database
       community.mysql.mysql_db:
         name: testDatabase
