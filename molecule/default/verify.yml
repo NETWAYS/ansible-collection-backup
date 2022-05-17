@@ -25,8 +25,8 @@
 
     - name: Create backup script
       template:
-        scr: backup.sh.j2
-        dst: /root
+        src: backup.sh.j2
+        dest: /root
         owner: root
         group: root
         mode: "0600"
