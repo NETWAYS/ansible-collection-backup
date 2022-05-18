@@ -27,8 +27,7 @@
 
     - name: Create backup script
       template:
-        #src: /home/runner/work/ansible-collection-backup/ansible-collection-backup/templates/backup.sh.j2
-        src:  ~/.ansible/collections/ansible_collections/widhalmt.backup/templates/backup.sh.j2
+        src: /home/runner/work/ansible-collection-backup/ansible-collection-backup/templates/backup.sh.j2
         dest: /root/backup.sh
         owner: root
         group: root
