@@ -40,9 +40,5 @@
           - cronie
       when: ansible_os_family == "RedHat"
     
-    - name: restart AppArmor
-      command: service apparmor stop
-      when: ansible_distribution == 'Debian'
-    
   roles:
     - geerlingguy.mysql
