@@ -15,7 +15,7 @@
         password: netways0815!
         priv: testUser.*:ALL
         
-  tasks:
+  pre_tasks:
     - name: Refresh apt cache
       apt:
         update_cache: yes
