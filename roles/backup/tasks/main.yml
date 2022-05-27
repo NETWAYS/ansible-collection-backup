@@ -1,0 +1,16 @@
+---
+- name: Place backup script
+  template:
+    dest: /root
+    src: backup.sh.j2
+    owner: root
+    group: root
+    mode: 0644
+    backup: true
+
+- name: Set a cron job for backup
+  cron:
+    name: "mysql backup"
+    minute: "0"
+    hour: "12"
+    job: "/root/backup.sh > /dev/null"
