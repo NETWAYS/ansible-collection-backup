@@ -1,8 +1,21 @@
 ---
 - name: Prepare
   hosts: all
-  tasks:
-
+  vars:
+    mysql_root_username: root
+    mysql_root_password: ChangeMe
+    mysql_databases:
+      - name: testDatabase
+        encoding: utf8
+        collation: utf8_general_ci
+        replicate: 0
+    mysql_users: 
+      - name: testDatabase
+        host: 127.0.0.1
+        password: ChangeMe
+        priv: testUser.*:ALL
+        
+  pre_tasks:
     - name: Refresh apt cache
       apt:
         update_cache: yes
@@ -26,3 +39,6 @@
         name:
           - cronie
       when: ansible_os_family == "RedHat"
+
+  roles:
+    - geerlingguy.mysql

@@ -9,3 +9,7 @@
     - name: "Include Rsnapshot"
       include_role:
         name: rsnapshot
+
+    - name: "Include Bachup"
+      include_role:
+        name: backup

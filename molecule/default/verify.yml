@@ -1,6 +1,7 @@
 ---
-
 - hosts: all
+  vars:
+    system_time: "{{ lookup('pipe','date +%Y%m%d') }}"
   tasks:
     - name: Run default rsnapshot
       shell: >
@@ -13,3 +14,52 @@
     - name: Check for backup
       stat:
         path: /opt/backup/rsnapshot/hourly.0/backup-defaul/root/rsnapshot/timestamp.hourly
+
+    - name: .my.cnf exists    
+      command: cat /root/.my.cnf
+
+    - name: Create test table in database and insert test value
+      community.mysql.mysql_query:
+        query:
+          - CREATE TABLE IF NOT EXISTS test (message varchar(255) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+          - INSERT INTO test(message) VALUES('Ansible value');
+        login_db: testDatabase
+
+    - name: Create backup with backup script
+      shell: /root/backup.sh
+      args:
+        executable: /bin/bash
+
+    - name: Drop test database
+      community.mysql.mysql_query:
+        query: DROP DATABASE testDatabase;
+        login_db: testDatabase
+
+    - name: Create a new database testDatabase
+      community.mysql.mysql_db:
+        name: testDatabase
+        state: present
+
+    - name: Restore database
+      community.mysql.mysql_db:
+        name: testDatabase
+        state: import
+        target: /opt/mysqlbackup/mysqldump_{{system_time}}.sql.bz2
+      when: ansible_os_family == 'Debian'
+
+    - name: Restore database
+      community.mysql.mysql_db:
+        name: testDatabase
+        state: import
+        target: /opt/mysqlbackup/mysqldump_{{system_time}}.sql
+      when: ansible_os_family == 'RedHat'
+
+    - name: Simple select query to acme db
+      community.mysql.mysql_query:
+        login_db: testDatabase
+        query: SELECT message FROM test
+      register: mysql_query_output
+    
+    - name: Print the mysql query
+      debug:
+        var: mysql_query_output

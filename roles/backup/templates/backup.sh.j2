@@ -1,0 +1,26 @@
+#!/bin/bash
+BACKUPDIR=/opt/mysqlbackup
+BACKUPNAME=${BACKUPDIR}/mysqldump_
+NEWBACKUP=${BACKUPNAME}$(date +%Y%m%d).sql
+OLDBACKUP=${BACKUPNAME}$(date +%Y%m%d -d "5 days ago").sql
+if [ -d ${BACKUPDIR} ]
+then
+  echo "Backup Directory exists"
+else
+  mkdir -p ${BACKUPDIR}
+  chmod 0700 ${BACKUPDIR}
+fi
+if [ -f ${NEWBACKUP}.bz2 ]
+then
+  rm -f ${NEWBACKUP}.bz2
+fi
+#/usr/bin/mysqldump --opt --all-databases --master-data=2 --events > ${NEWBACKUP} && bzip2 ${NEWBACKUP}
+/usr/bin/mysqldump --opt --all-databases --events > ${NEWBACKUP} && bzip2 ${NEWBACKUP}
+if [ -f ${OLDBACKUP}.bz2 ]
+then
+  rm -f ${OLDBACKUP}.bz2
+fi
+if [ -f ${OLDBACKUP} ]
+then
+  rm -f ${OLDBACKUP}
+fi

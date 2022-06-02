@@ -3,9 +3,9 @@ name: Molecule Test
 on:
   push:
     tags:
-      - '*'
+      - "*"
     branches:
-      - main
+      - "main"
   pull_request:
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        distro: [centos7, rockylinux8, debian10, ubuntu2004, ubuntu1804]
+        distro: [centos7, rockylinux8, ubuntu2004, ubuntu1804]
         scenario: [default]
 
     steps:
@@ -41,6 +41,9 @@ jobs:
           mkdir -p ~/.ansible/collections/ansible_collections/$COLLECTION_NAMESPACE
           cp -a ../ansible-collection-$COLLECTION_NAME ~/.ansible/collections/ansible_collections/$COLLECTION_NAMESPACE/$COLLECTION_NAME
 
+      - name: Install geerlingguy.mysql roles
+        run: ansible-galaxy install geerlingguy.mysql
+
       - name: Test with molecule
         run: |
           ansible --version
@@ -48,5 +51,5 @@ jobs:
           molecule --debug test -s ${{ matrix.scenario }}
         env:
           MOLECULE_DISTRO: ${{ matrix.distro }}
-          PY_COLORS: '1'
-          ANSIBLE_FORCE_COLOR: '1'
+          PY_COLORS: "1"
+          ANSIBLE_FORCE_COLOR: "1"
