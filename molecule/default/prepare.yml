@@ -3,7 +3,7 @@
   hosts: all
   vars:
     mysql_root_username: root
-    mysql_root_password: netways0815!
+    mysql_root_password: ChangeMe
     mysql_databases:
       - name: testDatabase
         encoding: utf8
@@ -12,7 +12,7 @@
     mysql_users: 
       - name: testDatabase
         host: 127.0.0.1
-        password: netways0815!
+        password: ChangeMe
         priv: testUser.*:ALL
         
   pre_tasks:
