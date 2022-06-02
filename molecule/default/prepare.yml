@@ -39,6 +39,11 @@
         name:
           - cronie
       when: ansible_os_family == "RedHat"
-    
+
+    - name: Install geerlingguy.mysql roles
+        ansible_galaxy_install:
+          type: role
+          name: geerlingguy.mysql
+
   roles:
     - geerlingguy.mysql

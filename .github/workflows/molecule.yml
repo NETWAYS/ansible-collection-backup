@@ -41,9 +41,6 @@ jobs:
           mkdir -p ~/.ansible/collections/ansible_collections/$COLLECTION_NAMESPACE
           cp -a ../ansible-collection-$COLLECTION_NAME ~/.ansible/collections/ansible_collections/$COLLECTION_NAMESPACE/$COLLECTION_NAME
 
-      - name: Install geerlingguy.mysql roles
-        run: ansible-galaxy install geerlingguy.mysql
-
       - name: Test with molecule
         run: |
           ansible --version
