@@ -1,0 +1,5 @@
+rsnapshot_backups:
+  - /etc/icinga2/
+  - /var/lib/icinga2/certs/
+  - /var/lib/icinga2/icinga2.state
+  - /var/lib/icinga2/modified-attributes.conf

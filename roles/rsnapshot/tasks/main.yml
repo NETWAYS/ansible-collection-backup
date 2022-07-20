@@ -36,6 +36,11 @@
     mode: 0644
     backup: true
 
+- name: Application specific configuration
+  include_tasks: "{{ item }}.yml"
+  loop:
+    "{{ applications }}"
+
 - name: Plan cronjobs with timestamp
   cron:
     name: "rsnapshot run {{ item.name }}"

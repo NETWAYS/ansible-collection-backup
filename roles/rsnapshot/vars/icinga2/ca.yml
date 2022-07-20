@@ -1,0 +1,2 @@
+rsnapshot_backups:
+  - /var/lib/icinga2/ca/
