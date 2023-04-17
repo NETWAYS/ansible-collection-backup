@@ -45,14 +45,14 @@
       community.mysql.mysql_db:
         name: testDatabase
         state: import
-        target: /opt/mysqlbackup/mysqldump_{{system_time}}.sql.bz2
+        target: /opt/mysqlbackup/mysqldump_{{ system_time }}.sql.bz2
       when: ansible_os_family == 'Debian'
 
     - name: Restore database
       community.mysql.mysql_db:
         name: testDatabase
         state: import
-        target: /opt/mysqlbackup/mysqldump_{{system_time}}.sql
+        target: /opt/mysqlbackup/mysqldump_{{ system_time }}.sql
       when: ansible_os_family == 'RedHat'
 
     - name: Simple select query to acme db
