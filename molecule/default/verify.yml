@@ -1,5 +1,6 @@
 ---
-- hosts: all
+- name: Tests
+  hosts: all
   vars:
     system_time: "{{ lookup('pipe','date +%Y%m%d') }}"
   tasks:
