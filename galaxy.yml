@@ -1,0 +1,23 @@
+namespace: netways
+name: backup
+version: 0.1.0
+readme: README.md
+
+license:
+  - GPL-3.0
+
+license_file: 'LICENSE'
+
+dependencies:
+  "community.general": "*"
+repository: https://github.com/netways/ansible-collection-backup
+documentation: https://github.com/netways/ansible-collection-backup/README.md
+homepage: https://www.netways.de
+issues: https://github.com/netways/ansible-collection-backup/issues
+build_ignore:
+  - .github
+  - .cache
+  - molecule
+  - .gitignore
+  - '*.tar.gz'
+  - 'venv*'
