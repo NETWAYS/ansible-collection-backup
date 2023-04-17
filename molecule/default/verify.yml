@@ -16,7 +16,7 @@
       stat:
         path: /opt/backup/rsnapshot/hourly.0/backup-defaul/root/rsnapshot/timestamp.hourly
 
-    - name: .my.cnf exists    
+    - name: .my.cnf exists
       command: cat /root/.my.cnf
 
     - name: Create test table in database and insert test value
@@ -60,7 +60,7 @@
         login_db: testDatabase
         query: SELECT message FROM test
       register: mysql_query_output
-    
+
     - name: Print the mysql query
       debug:
         var: mysql_query_output
