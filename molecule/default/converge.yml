@@ -13,3 +13,7 @@
     - name: "Include Backup"
       include_role:
         name: backup
+
+    - name: "Include Minimalbackup"
+      include_role:
+        name: minimalbackup

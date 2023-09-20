@@ -1,0 +1,15 @@
+---
+
+- name: Create temporary directory on host
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: minimalbackup
+  register: minimalbackup_localtmp
+
+- name: Create temporary directory on controlnode
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: minimalbackup
+  delegate_to: localhost
+  run_once: true
+  register: minimalbackup_centraltmp
