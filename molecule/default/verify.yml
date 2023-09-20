@@ -1,5 +1,6 @@
 ---
-- hosts: all
+- name: Tests
+  hosts: all
   vars:
     system_time: "{{ lookup('pipe','date +%Y%m%d') }}"
   tasks:
@@ -15,7 +16,7 @@
       stat:
         path: /opt/backup/rsnapshot/hourly.0/backup-defaul/root/rsnapshot/timestamp.hourly
 
-    - name: .my.cnf exists    
+    - name: .my.cnf exists
       command: cat /root/.my.cnf
 
     - name: Create test table in database and insert test value
@@ -44,14 +45,14 @@
       community.mysql.mysql_db:
         name: testDatabase
         state: import
-        target: /opt/mysqlbackup/mysqldump_{{system_time}}.sql.bz2
+        target: /opt/mysqlbackup/mysqldump_{{ system_time }}.sql.bz2
       when: ansible_os_family == 'Debian'
 
     - name: Restore database
       community.mysql.mysql_db:
         name: testDatabase
         state: import
-        target: /opt/mysqlbackup/mysqldump_{{system_time}}.sql
+        target: /opt/mysqlbackup/mysqldump_{{ system_time }}.sql
       when: ansible_os_family == 'RedHat'
 
     - name: Simple select query to acme db
@@ -59,7 +60,7 @@
         login_db: testDatabase
         query: SELECT message FROM test
       register: mysql_query_output
-    
+
     - name: Print the mysql query
       debug:
         var: mysql_query_output
