@@ -1,15 +1,45 @@
 ---
 
 - name: Create temporary directory on host
-  ansible.builtin.tempfile:
+  ansible.builtin.file:
     state: directory
-    suffix: minimalbackup
-  register: minimalbackup_localtmp
+    path: "{{ minimalbackup_tmpdir }}"
 
 - name: Create temporary directory on controlnode
-  ansible.builtin.tempfile:
+  ansible.builtin.file:
     state: directory
-    suffix: minimalbackup
+    path: "{{ minimalbackup_tmpdir }}"
   delegate_to: localhost
   run_once: true
-  register: minimalbackup_centraltmp
+
+- name: Collect size of volumes
+  ansible.builtin.command: "df -h"
+  register: minimalbackup_df
+
+- name: Print volume size into file
+  copy:
+    content: "{{ minimalbackup_df.stdout }}"
+    dest: "{{ minimalbackup_tmpdir }}/{{ ansible_hostname }}_volumes"
+  delegate_to: localhost
+
+- name: Collect directory sizes
+  block:
+    - name: Create du directory
+      ansible.builtin.file:
+        state: directory
+        path: "{{ minimalbackup_tmpdir }}/du"
+
+    - name: Collect all directories
+      ansible.builtin.include_tasks: collect_dir_size.yml
+      loop: "{{ minimalbackup_directories }}"
+
+    - name: Ansemble size file
+      ansible.builtin.assemble:
+        src: "{{ minimalbackup_tmpdir }}/du"
+        dest: "{{ minimalbackup_tmpdir }}/{{ ansible_hostname }}_directories"
+
+    - name: Fetch size file
+      ansible.builtin.fetch:
+        src: "{{ minimalbackup_tmpdir }}/{{ ansible_hostname }}_directories"
+        dest: "{{ minimalbackup_tmpdir }}/"
+        flat: true

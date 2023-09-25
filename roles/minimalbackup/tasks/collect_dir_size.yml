@@ -1,0 +1,29 @@
+---
+
+- name: Check for existence of directory
+  stat:
+    path: "{{ item }}"
+  register: minimalbackup_dir_exists
+
+- name: Collect sizes block
+  when:
+    - minimalbackup_dir_exists.stat.exists
+  block:
+
+    - name: "Collect size of directory {{ item }}"
+      command: "du -hs {{ item }}"
+      register: "minimalbackup_sizes"
+
+    - name: Write size of directory {{ item }} to temporary file
+      copy:
+        content: "{{ minimalbackup_sizes.stdout }}"
+        dest: "{{ minimalbackup_tmpdir }}/du/{{ item | replace('/', '_') }}"
+
+    - name: Archive directory to tmpdir
+      archive:
+        dest: "{{ minimalbackup_tmpdir }}/{{ item | replace('/', '_') }}.bz2"
+        format: bz2
+        path: "{{ item }}"
+      when:
+        - minimalbackup_fetch_directories | bool
+        - item not in minimalbackup_fetch_directories_except
