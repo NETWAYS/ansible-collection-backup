@@ -21,7 +21,7 @@
 
     - name: Archive directory to tmpdir
       archive:
-        dest: "{{ minimalbackup_tmpdir }}/{{ item | replace('/', '_') }}.bz2"
+        dest: "{{ minimalbackup_tmpdir }}/{{ ansible_hostname }}_{{ item | replace('/', '_') }}.bz2"
         format: bz2
         path: "{{ item }}"
       when:

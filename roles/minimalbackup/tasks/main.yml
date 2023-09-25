@@ -33,7 +33,7 @@
       ansible.builtin.include_tasks: collect_dir_size.yml
       loop: "{{ minimalbackup_directories }}"
 
-    - name: Ansemble size file
+    - name: Assemble size file
       ansible.builtin.assemble:
         src: "{{ minimalbackup_tmpdir }}/du"
         dest: "{{ minimalbackup_tmpdir }}/{{ ansible_hostname }}_directories"
