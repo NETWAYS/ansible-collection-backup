@@ -10,6 +10,6 @@
       include_role:
         name: rsnapshot
 
-    - name: "Include Bachup"
+    - name: "Include Backup"
       include_role:
         name: backup

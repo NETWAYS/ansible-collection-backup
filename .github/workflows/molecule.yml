@@ -19,17 +19,17 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        distro: [centos7, rockylinux8, ubuntu2004, ubuntu1804]
+        distro: [rockylinux8, rockylinux9,  ubuntu2004, ubuntu2204]
         scenario: [default]
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.10.11
 
       - name: Install dependencies
         run: |
