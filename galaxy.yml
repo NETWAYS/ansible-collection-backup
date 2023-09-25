@@ -12,6 +12,8 @@ license:
 tags:
   - backup
   - rsnapshot
+  - tools
+  - storage
 dependencies: {}
 repository: https://github.com/NETWAYS/ansible-collection-backup
 documentation: https://github.com/NETWAYS/ansible-collection-backup/tree/main/docs
