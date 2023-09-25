@@ -13,11 +13,14 @@
     - name: "Collect size of directory {{ item }}"
       command: "du -hs {{ item }}"
       register: "minimalbackup_sizes"
+      changed_when: false
 
     - name: Write size of directory {{ item }} to temporary file
       copy:
         content: "{{ minimalbackup_sizes.stdout }}"
         dest: "{{ minimalbackup_tmpdir }}/du/{{ item | replace('/', '_') }}"
+      tags:
+        - molecule-idempotence-notest
 
     - name: Archive directory to tmpdir
       archive:
@@ -27,3 +30,13 @@
       when:
         - minimalbackup_fetch_directories | bool
         - item not in minimalbackup_fetch_directories_except
+      tags:
+        - molecule-idempotence-notest
+
+    - name: Fetch tarball
+      ansible.builtin.fetch:
+        src: "{{ minimalbackup_tmpdir }}/{{ ansible_hostname }}_{{ item | replace('/', '_') }}.bz2"
+        dest: "{{ minimalbackup_tmpdir }}/"
+        flat: true
+      tags:
+        - molecule-idempotence-notest

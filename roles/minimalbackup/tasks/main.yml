@@ -15,12 +15,16 @@
 - name: Collect size of volumes
   ansible.builtin.command: "df -h"
   register: minimalbackup_df
+  changed_when: false
 
 - name: Print volume size into file
   copy:
     content: "{{ minimalbackup_df.stdout }}"
     dest: "{{ minimalbackup_tmpdir }}/{{ ansible_hostname }}_volumes"
   delegate_to: localhost
+  tags:
+    - molecule-idempotence-notest
+
 
 - name: Collect directory sizes
   block:
@@ -43,3 +47,13 @@
         src: "{{ minimalbackup_tmpdir }}/{{ ansible_hostname }}_directories"
         dest: "{{ minimalbackup_tmpdir }}/"
         flat: true
+
+- name: Check for MySQL / MariaDB
+  community.mysql.mysql_info:
+  failed_when: false
+  register: minimalbackup_mysql_info
+
+- name: Run MySQL / MariaDB checks
+  ansible.builtin.include_tasks: mysql_variables.yml
+  when:
+    minimalbackup_mysql_info.version.full is defined

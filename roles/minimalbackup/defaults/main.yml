@@ -11,5 +11,5 @@ minimalbackup_directories:
   - /usr/share
   - /usr/local
   - /var/log
-minimalbackup_fetch_directories: true
+minimalbackup_fetch_directories: false
 minimalbackup_fetch_directories_except: []
