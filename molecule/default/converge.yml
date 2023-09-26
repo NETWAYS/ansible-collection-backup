@@ -2,6 +2,8 @@
 
 - name: Converge
   hosts: all
+  vars:
+    minimalbackup_fetch_directories: true
   collections:
     - netways.backup
   tasks:
@@ -13,3 +15,11 @@
     - name: "Include Backup"
       include_role:
         name: backup
+
+    - name: "Set up database for data collection"
+      include_role:
+        name: geerlingguy.mysql
+
+    - name: "Include Minimalbackup"
+      include_role:
+        name: minimalbackup

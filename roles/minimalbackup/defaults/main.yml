@@ -1,0 +1,15 @@
+---
+
+# can't use `tmpfile` because of missing idempotence
+minimalbackup_tmpdir: /tmp/minimalbackup
+minimalbackup_directories:
+  - /etc
+  - /root
+  - /home
+  - /opt
+  - /export
+  - /usr/share
+  - /usr/local
+  - /var/log
+minimalbackup_fetch_directories: false
+minimalbackup_fetch_directories_except: []
