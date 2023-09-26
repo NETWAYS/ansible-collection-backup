@@ -9,6 +9,7 @@
 - name: Fetch MySQL / MariaDB variables
   community.mysql.mysql_query:
     query: "SHOW VARIABLES"
+  changed_when: false
   register: minimalbackup_mysql_variables
 
 - name: Print MySQL / MariaDB variables
@@ -16,4 +17,5 @@
     content: "{{ minimalbackup_mysql_variables }}"
     dest: "{{ minimalbackup_tmpdir }}/{{ ansible_hostname }}_mysql_variables"
   delegate_to: localhost
-
+  tags:
+    - molecule-idempotence-notest
