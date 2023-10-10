@@ -1,0 +1,33 @@
+---
+- name: Backup of the default Icinga2 directories for every distribution
+  ansible.builtin.include_vars:
+    file: icinga2/defaults.yml
+    name: icinga2_defaults
+
+- name: Backup of the default Icinga2 directories for every distribution
+  ansible.builtin.include_vars:
+    file: icinga2/ca.yml
+    name: icinga2_ca
+  when: '"ca" in "{{ icinga2_features }}"'
+
+- name: Backup of the plugins directory for {{ ansible_os_family }}
+  ansible.builtin.include_vars:
+    file: icinga2/os_{{ ansible_os_family|lower }}.yml
+    name: icinga2_os
+
+- name: Combine variables for Icinga
+  set_fact:
+    icinga_backups: "{{ [icinga2_defaults, icinga2_ca | default({}), icinga2_os] | combine(list_merge='append') }}" # noqa line-length
+
+- name: Combine variables for rsnapshot
+  set_fact:
+    rsnapshot_backups: '{{ icinga_backups.rsnapshot_backups }}'
+
+- name: Place rsnapshot configuration
+  template:
+    dest: /etc/rsnapshot-icinga2.conf
+    src: rsnapshot.conf.j2
+    owner: root
+    group: root
+    mode: 0644
+    backup: true
