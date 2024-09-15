@@ -1,0 +1,18 @@
+---
+- name: Backup of the Icinga Web 2 configuration and modules directories
+  ansible.builtin.include_vars:
+    file: icingaweb2/defaults.yml
+    name: icingaweb2
+
+- name: Combine variables for rsnapshot
+  set_fact:
+    rsnapshot_backups: "{{ icingaweb2.rsnapshot_backups }}"
+
+- name: Place rsnapshot configuration
+  template:
+    dest: /etc/rsnapshot-icingaweb2.conf
+    src: rsnapshot.conf.j2
+    owner: root
+    group: root
+    mode: 0644
+    backup: true

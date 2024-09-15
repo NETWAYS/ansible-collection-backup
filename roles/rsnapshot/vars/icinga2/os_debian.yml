@@ -1,0 +1,3 @@
+rsnapshot_backups:
+  - /usr/lib/nagios/plugins
+
